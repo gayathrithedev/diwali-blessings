@@ -10,9 +10,29 @@ body{background:var(--bg); color: #fff; font-family: Inter, system-ui, Arial}
 .right-panel{max-width:640px}
 
 .github-form{display:flex; flex-direction:column; gap:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:18px; border-radius:12px}
-.github-form input{padding:8px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#fff}
+.title{font-size:2rem; margin:0 0 6px 0; color: #fff; letter-spacing:0.6px}
+.subtitle{margin:0 0 14px 0; color: #ffdca8}
+
+.username-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:12px; border-radius:10px; display:flex; flex-direction:column; gap:8px}
+.username-label{font-size:0.9rem; color:#ffe7b6}
+.github-form input{padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#fff; font-size:1rem}
 .github-form .actions{display:flex; justify-content:flex-end}
-.github-form .primary{background:var(--accent); border:none; padding:10px 16px; border-radius:8px; color:#2b0b00; font-weight:600}
+.github-form .primary{background:var(--accent); border:none; padding:12px 16px; border-radius:10px; color:#2b0b00; font-weight:700}
+.github-form .primary.full{width:100%}
+
+/* Flip card layout */
+.main-container{display:flex; align-items:center; justify-content:center; padding:48px}
+.flip-card{width:760px; height:420px; perspective:1600px}
+.flip-card .flipper{position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform 800ms cubic-bezier(.2,.8,.2,1)}
+.flip-card.flipped .flipper{transform:rotateY(180deg)}
+.flip-card .front, .flip-card .back{position:absolute; inset:0; backface-visibility:hidden; display:flex; align-items:center; justify-content:center}
+.flip-card .back{transform:rotateY(180deg)}
+.card-inner{width:90%; max-width:640px; background:linear-gradient(135deg, rgba(20,10,30,0.6), rgba(30,15,40,0.6)); border-radius:16px; padding:28px; box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+
+@media (max-width: 880px){
+  .flip-card{width:92%; height:auto}
+  .flip-card .flipper{min-height:420px}
+}
 
 .blessing-card{display:flex; gap:16px; background:linear-gradient(135deg, rgba(255,140,50,0.08), rgba(255,220,120,0.02)); padding:18px; border-radius:14px; align-items:center}
 .blessing-card .avatar{width:96px; height:96px; border-radius:50%; border:3px solid rgba(255,255,255,0.06)}

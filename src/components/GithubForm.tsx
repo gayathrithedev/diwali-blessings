@@ -33,17 +33,18 @@ export default function GithubForm({ onResult, onError }: Props) {
 
   return (
     <form className="github-form" onSubmit={handleSubmit}>
-      <label>
-        GitHub username
+      <div className="username-card">
+        <label className="username-label">GitHub username</label>
         <input
           value={username}
-          onChange={(e) => setUsername(e.target.value.trim())}
+          onChange={(e) => setUsername(e.target.value)}
           placeholder="e.g. gaearon"
+          aria-label="GitHub username"
         />
-      </label>
+      </div>
       <div className="actions">
-        <button type="submit" className="primary" disabled={loading}>
-          {loading ? 'Fetching...' : 'Get Blessing'}
+        <button type="submit" className="primary full" disabled={loading}>
+          {loading ? 'Fetching...' : 'Generate Blessing'}
         </button>
       </div>
     </form>

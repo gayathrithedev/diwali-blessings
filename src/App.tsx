@@ -35,28 +35,38 @@ export default function App() {
     <div className="app-root">
       <DiwaliBackground />
       <div className="main-container">
-        <div className="left-panel">
-          <h1>Diwali Blessings</h1>
-          <p>Enter your GitHub username to receive a unique Diwali blessing based on your activity.</p>
-          <GithubForm
-            onResult={(data) => {
-              const blessing = generateBlessing(data.user, data.events)
-              setResult({ ...data, blessing })
-              setError(null)
-            }}
-            onError={(msg) => { setError(msg); setResult(null) }}
-          />
-          {error && <div style={{color:'#ffb3a1', marginTop:12}}>{error}</div>}
-        </div>
+        <div className={`flip-card ${result ? 'flipped' : ''}`}>
+          <div className="flipper">
+            <div className="front">
+              <div className="card-inner">
+                <h1 className="title">Diwali Dev Blessings</h1>
+                <p className="subtitle">Generate your diwali blessing card</p>
 
-        <div className="right-panel">
-          {result ? (
-            <BlessingCard data={result} />
-          ) : (
-            <div className="placeholder" style={{opacity:0.7}}>
-              A colorful blessing card will appear here.
+                <GithubForm
+                  onResult={(data) => {
+                    const blessing = generateBlessing(data.user, data.events)
+                    setResult({ ...data, blessing })
+                    setError(null)
+                  }}
+                  onError={(msg) => { setError(msg); setResult(null) }}
+                />
+
+                {error && <div style={{color:'#ffb3a1', marginTop:12}}>{error}</div>}
+              </div>
             </div>
-          )}
+
+            <div className="back">
+              <div className="card-inner">
+                {result ? (
+                  <BlessingCard data={result} onBack={() => setResult(null)} />
+                ) : (
+                  <div className="placeholder" style={{opacity:0.8}}>
+                    Your blessing will appear here after generation.
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

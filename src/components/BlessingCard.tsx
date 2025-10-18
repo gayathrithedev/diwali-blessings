@@ -7,9 +7,10 @@ type Props = {
     events: any[]
     blessing: string
   }
+  onBack?: () => void
 }
 
-export default function BlessingCard({ data }: Props) {
+export default function BlessingCard({ data, onBack }: Props) {
   const { user, events, blessing } = data
 
   return (
@@ -25,6 +26,11 @@ export default function BlessingCard({ data }: Props) {
           <div>Followers: {user.followers}</div>
           <div>Recent activity: {events.length} events</div>
         </div>
+        {onBack && (
+          <div style={{marginTop:14}}>
+            <button className="back-btn" onClick={onBack}>Generate another</button>
+          </div>
+        )}
       </div>
     </div>
   )
