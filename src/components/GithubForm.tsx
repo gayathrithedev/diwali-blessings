@@ -44,7 +44,7 @@ export default function GithubForm({ onResult, onError }: Props) {
       </div>
       <div className="actions">
         <button type="submit" className="primary full" disabled={loading}>
-          {loading ? 'Fetching...' : 'Generate Blessing'}
+          {loading ? 'Fetching Your Aura' : 'Generate Blessing'}
         </button>
       </div>
     </form>
