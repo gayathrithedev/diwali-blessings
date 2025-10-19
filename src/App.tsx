@@ -21,8 +21,9 @@ type GeneratorInput = {
   events: unknown[]
 }
 
-function generateBlessingFromActivity({ public_repos, followers, totalStars = 0, lastCommit, name, login, events }: GeneratorInput) {
+function generateBlessingFromActivity(input: GeneratorInput) {
   // follow user's sample scoring logic
+  const { public_repos, totalStars = 0, lastCommit, name, login } = input
   const repoCount = public_repos || 0
   const daysSinceCommit = lastCommit ? (Date.now() - new Date(lastCommit).getTime()) / (1000 * 60 * 60 * 24) : Infinity
 
@@ -70,9 +71,9 @@ export default function App() {
                 <p className="subtitle">✨ Generate your diwali blessing card ✨</p>
 
                 <GithubForm
-                  onResult={(data: any) => {
+                  onResult={(data: { user: User; events?: unknown[]; totalStars?: number; lastCommit?: string | null }) => {
                     // data: { user, events, totalStars, lastCommit }
-                    const user = data.user || {}
+                    const user = data.user || ({} as User)
                     const blessing = generateBlessingFromActivity({
                       public_repos: user.public_repos || 0,
                       followers: user.followers || 0,
