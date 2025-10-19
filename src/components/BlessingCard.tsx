@@ -32,8 +32,8 @@ type NavigatorWithShare = Navigator & {
 }
 
 export default function BlessingCard({ data, onBack }: Props) {
-  const { user, events, blessing } = data
-  const { totalStars, lastCommit } = data
+  const { user, blessing } = data
+  const { totalStars } = data
   const cardRef = useRef<HTMLDivElement | null>(null)
   const [sharing, setSharing] = useState(false)
 
@@ -136,8 +136,6 @@ export default function BlessingCard({ data, onBack }: Props) {
           <div>Public repos: {user.public_repos}</div>
           <div>Followers: {user.followers}</div>
           <div>Stars: {totalStars ?? 0}</div>
-          <div>Recent activity: {events.length} events</div>
-          <div>Last push: {lastCommit ? new Date(lastCommit).toLocaleString() : '–'}</div>
         </div>
         <div className="share-row">
           <button className="share-btn" onClick={handleShare} disabled={sharing}>{sharing ? 'Sharing...' : 'Share'}</button>
