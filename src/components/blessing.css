@@ -3,3 +3,9 @@
 
 .back-btn{background:transparent; border:1px solid rgba(255,255,255,0.08); color:#fff; padding:8px 12px; border-radius:8px; cursor:pointer}
 .back-btn:hover{background:rgba(255,255,255,0.02)}
+
+.share-row{display:flex;gap:10px;align-items:center;margin-top:12px}
+.share-btn{background:linear-gradient(90deg,#ffb86b,#ff6b6b);border:none;color:#111;padding:8px 12px;border-radius:8px;cursor:pointer}
+.share-btn:disabled{opacity:0.6;cursor:default}
+.share-link{color:#fff;background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:6px;text-decoration:none}
+.share-link:hover{background:rgba(255,255,255,0.02)}
