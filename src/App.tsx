@@ -54,7 +54,7 @@ function generateBlessingFromActivity(input: GeneratorInput) {
 }
 
 export default function App() {
-  type Result = { user: User; events: unknown[]; blessing: string }
+  type Result = { user: User; events: unknown[]; blessing: string; totalStars?: number; lastCommit?: string | null }
   const [result, setResult] = useState<Result | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -73,17 +73,24 @@ export default function App() {
                 <GithubForm
                   onResult={(data: { user: User; events?: unknown[]; totalStars?: number; lastCommit?: string | null }) => {
                     // data: { user, events, totalStars, lastCommit }
-                    const user = data.user || ({} as User)
-                    const blessing = generateBlessingFromActivity({
-                      public_repos: user.public_repos || 0,
-                      followers: user.followers || 0,
-                      totalStars: data.totalStars || 0,
-                      lastCommit: data.lastCommit || null,
-                      name: user.name,
-                      login: user.login,
-                      events: data.events || []
-                    })
-                    setResult({ user, events: data.events || [], blessing })
+                      const user = data.user || ({} as User)
+                      const blessing = generateBlessingFromActivity({
+                        public_repos: user.public_repos || 0,
+                        followers: user.followers || 0,
+                        totalStars: data.totalStars || 0,
+                        lastCommit: data.lastCommit || null,
+                        name: user.name,
+                        login: user.login,
+                        events: data.events || []
+                      })
+                      // include totalStars and lastCommit in the result so the card can display them
+                      setResult({
+                        user,
+                        events: data.events || [],
+                        blessing,
+                        totalStars: data.totalStars || 0,
+                        lastCommit: data.lastCommit || null
+                      })
                     setError(null)
                   }}
                   onError={(msg) => { setError(msg); setResult(null) }}

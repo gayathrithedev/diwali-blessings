@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
 
+type ResultPayload = {
+  user: any
+  events: any[]
+  totalStars: number
+  lastCommit: string | null
+  starredCount?: number
+}
+
 type Props = {
-  onResult: (data: any) => void
+  onResult: (data: ResultPayload) => void
   onError?: (err: string) => void
 }
 
@@ -22,8 +30,9 @@ export default function GithubForm({ onResult, onError }: Props) {
       const eventsRes = await fetch(`https://api.github.com/users/${username}/events/public`)
       const events = eventsRes.ok ? await eventsRes.json() : []
       // fetch repos to compute total stars and last pushed date
-      let totalStars = 0
-      let lastCommit: string | null = null
+  let totalStars = 0
+  let lastCommit: string | null = null
+  let starredCount = 0
       try {
         // try to fetch up to 100 repos (enough for most users)
         const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=pushed`)
@@ -37,15 +46,28 @@ export default function GithubForm({ onResult, onError }: Props) {
             }
           }
         }
-      } catch (err) {
+      } catch {
         // ignore repo fetch failures (rate limits) and continue
         // console.warn('repo fetch failed', err)
       }
 
-      const payload = { user, events, totalStars, lastCommit }
+      try {
+        // fetch repos the user has starred (the repos they have given a star to)
+        // we request up to 100 entries which is sufficient for most users; this may be paginated
+        const starredRes = await fetch(`https://api.github.com/users/${username}/starred?per_page=100`)
+        if (starredRes.ok) {
+          const starred = await starredRes.json()
+          if (Array.isArray(starred)) starredCount = starred.length
+        }
+      } catch {
+        // ignore starred fetch errors
+      }
+
+  const payload = { user, events, totalStars, lastCommit, starredCount }
       onResult(payload)
-    } catch (err: any) {
-      onError?.(err.message || String(err))
+    } catch (e) {
+      const msg = (e && typeof e === 'object' && 'message' in e) ? (e as Error).message : String(e)
+      onError?.(msg)
     } finally {
       setLoading(false)
     }

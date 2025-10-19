@@ -9,3 +9,14 @@
 .share-btn:disabled{opacity:0.6;cursor:default}
 .share-link{color:#fff;background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:6px;text-decoration:none}
 .share-link:hover{background:rgba(255,255,255,0.02)}
+
+/* wrapper for the generate another / back button to center it */
+.back-row{display:flex;justify-content:center;margin-top:14px}
+.back-row .back-btn{min-width:160px}
+
+/* Make avatar links clearly interactive */
+.card-left a{display:inline-block}
+.avatar{width:88px;height:88px;border-radius:999px;display:block}
+.card-left a:focus .avatar{outline:3px solid rgba(255,200,100,0.25);outline-offset:4px}
+.card-left a:hover .avatar{transform:translateY(-2px);transition:transform 120ms ease}
+.card-left a, .card-left a:hover{cursor:pointer}
