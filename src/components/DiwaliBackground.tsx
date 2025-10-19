@@ -1,5 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import './diwali.css'
+import Lottie from "lottie-react";
+import diyaAnimation from '../assets/DiwaliDiya.json'
 
 export default function DiwaliBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -19,28 +21,34 @@ export default function DiwaliBackground() {
       ctx.scale(DPR, DPR)
     }
 
-    const sparks: any[] = []
+  interface Spark {
+    x: number
+    y: number
+    vx: number
+    vy: number
+    life: number
+    color: string
+  }
+
+  const sparks: Spark[] = []
 
     function spawnFirework() {
       const x = Math.random() * window.innerWidth
       const y = Math.random() * window.innerHeight * 0.6
       const hue = Math.random() * 360
       for (let i = 0; i < 40; i++) {
-        sparks.push({
+        const spark: Spark = {
           x,
           y,
           vx: (Math.random() - 0.5) * 6,
           vy: (Math.random() - 0.9) * 6,
           life: 60 + Math.random() * 40,
           color: `hsl(${hue} ${80 + Math.random() * 20}% 50%)`,
-        })
+        }
+        sparks.push(spark)
       }
     }
-
-    let last = 0
-    function loop(ts: number) {
-      const dt = ts - last
-      last = ts
+    function loop() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       // subtle radial glow
@@ -65,22 +73,7 @@ export default function DiwaliBackground() {
         if (s.life <= 0) sparks.splice(i, 1)
       }
 
-      // draw floating diyas (simple glowing orbs)
-      const t = ts / 1000
-      for (let i = 0; i < 8; i++) {
-        const ix = (i / 8) * window.innerWidth + (Math.sin(t + i) * 30)
-        const iy = window.innerHeight - 80 + Math.cos(t * 1.2 + i) * 6
-        const gradient = ctx.createRadialGradient(ix, iy, 0, ix, iy, 30)
-        gradient.addColorStop(0, 'rgba(255,220,120,0.95)')
-        gradient.addColorStop(1, 'rgba(255,120,20,0.08)')
-        ctx.fillStyle = gradient
-        ctx.globalAlpha = 0.9
-        ctx.beginPath()
-        ctx.ellipse(ix, iy, 22, 12, 0, 0, Math.PI * 2)
-        ctx.fill()
-        ctx.closePath()
-      }
-
+      // (removed canvas-drawn floating diyas; Lottie diya is used instead)
       ctx.globalAlpha = 1
 
       // occasionally spawn fireworks
@@ -102,10 +95,11 @@ export default function DiwaliBackground() {
   return (
     <div className="diwali-bg">
       <canvas ref={canvasRef} className="diwali-canvas" />
-      <div className="strings">
-        {/* decorative hanging lights */}
-        <div className="string" />
-        <div className="string" />
+      <div className="diya-player">
+        <Lottie animationData={diyaAnimation} loop={true} style={{width: 200, height: 200}} />
+        <div style={{textAlign: 'center', padding: '12px 0', color: '#ffd7c2'}}>
+          Made with ❤️ for developers, this Diwali.
+        </div>
       </div>
     </div>
   )

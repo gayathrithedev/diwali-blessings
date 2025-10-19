@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import DiwaliBackground from './components/DiwaliBackground'
 import GithubForm from './components/GithubForm'
@@ -85,7 +85,8 @@ export default function App() {
           <div className="flipper">
             <div className="front">
               <div className="card-inner">
-                <h1 className="title">Diwali Dev Blessings</h1>
+                <h1 className="title">GitHub Diwali Blessings</h1>
+                <p className="tagline">“This Diwali, let the code gods bless your commits with divine light 💫”</p>
                 <p className="subtitle">✨ Generate your diwali blessing card ✨</p>
 
                 <GithubForm

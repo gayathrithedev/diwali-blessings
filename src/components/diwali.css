@@ -1,9 +1,22 @@
 .diwali-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0 }
 .diwali-canvas { width: 100%; height: 100%; display: block }
-.diwali-bg .strings { position: absolute; inset: 0; pointer-events: none }
-.diwali-bg .string { position: absolute; width: 100%; height: 2px; background: linear-gradient(90deg,#ffea85,transparent); top: 6%; opacity: 0.25 }
 
 /* small responsive tweaks */
 @media (max-width: 600px) {
   .diwali-bg .string { top: 10% }
 }
+
+.diya-player {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  z-index: 2;
+  gap: 8px;
+  text-align: center;
+}
+
