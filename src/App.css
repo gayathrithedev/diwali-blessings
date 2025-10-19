@@ -31,9 +31,31 @@ body{background:var(--bg); color: #fff; font-family: Inter, system-ui, Arial}
 .flip-card .back{transform:rotateY(180deg)}
 .card-inner{width:90%; max-width:640px; background:linear-gradient(135deg, rgba(20,10,30,0.6), rgba(30,15,40,0.6)); border-radius:16px; padding:28px; box-shadow:0 10px 40px rgba(0,0,0,0.6)}
 
-@media (max-width: 880px){
+
+@media (max-width: 768px){
+  #root{
+    padding:16px;
+  }
+  .main-container{
+    padding: 16px;
+  }
   .flip-card{width:92%; height:auto}
-  .flip-card .flipper{min-height:420px}
+  .flip-card .flipper{width: 92%; height: 428px}
+  .card-inner{width: 100%;}
+  .share-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .blessing-card{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+  .blessing-card .avatar{
+    width:60px;
+    height:60px;
+    border-radius: 30px;
+  }
 }
 
 .blessing-card{display:flex; gap:16px; background:linear-gradient(135deg, rgba(255,140,50,0.08), rgba(255,220,120,0.02)); padding:18px; border-radius:14px; align-items:center}
@@ -45,6 +67,7 @@ body{background:var(--bg); color: #fff; font-family: Inter, system-ui, Arial}
 /* overlay sparkle */
 .sparkles{position:absolute; inset:0; pointer-events:none; z-index:1}
 #root {
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
