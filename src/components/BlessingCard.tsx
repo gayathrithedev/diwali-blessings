@@ -161,7 +161,7 @@ export default function BlessingCard({ data, onBack }: Props) {
         </a>
       </div>
       <div className="card-right">
-        <h2>Happy Diwali, {user.name || user.login}!</h2>
+        <h2>Happy Diwali 🪔, {user.name || user.login}!</h2>
         <p className="blessing">{blessing}</p>
         <div className="meta">
           <div>Public repos: {user.public_repos}</div>
