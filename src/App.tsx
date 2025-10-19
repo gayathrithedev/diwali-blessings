@@ -11,65 +11,45 @@ type User = {
   public_repos: number
   followers: number
 }
+type GeneratorInput = {
+  public_repos: number
+  followers: number
+  totalStars?: number
+  lastCommit?: string | null
+  name?: string
+  login: string
+  events: unknown[]
+}
 
-function generateBlessing(user: User, events: unknown[]) {
-  // simple heuristic-based blessing
-  const repoScore = Math.min(1, user.public_repos / 20)
-  const followerScore = Math.min(1, user.followers / 50)
-  const activityScore = Math.min(1, (events || []).length / 10)
+function generateBlessingFromActivity({ public_repos, followers, totalStars = 0, lastCommit, name, login, events }: GeneratorInput) {
+  // follow user's sample scoring logic
+  const repoCount = public_repos || 0
+  const daysSinceCommit = lastCommit ? (Date.now() - new Date(lastCommit).getTime()) / (1000 * 60 * 60 * 24) : Infinity
 
-  const total = repoScore * 0.4 + followerScore * 0.3 + activityScore * 0.3
+  // score
+  let score = repoCount + totalStars / 10
+  if (daysSinceCommit < 7) score += 30
+  else if (daysSinceCommit < 30) score += 15
 
+  // Ten meaningful & fun templates
   const templates = [
-    'May your repo stars multiply like fireworks and your code bring light to many!',
-    'Wishing you a Diwali full of bright commits, merged PRs, and joyful reviews!',
-    'May this festival of lights bring you creative ideas and bug-free nights!',
-    'May your branches be conflict-free and your celebrations sparkling with joy!',
-    'May your CI always pass and your evenings be filled with laughter!',
-    'May your issues be few and your inspirations many this Diwali!',
-    'May your open source contributions light up someone’s project tonight!',
-    'May you find elegant solutions and delightful bugs to squash!',
-    'May your pull requests bring smiles and helpful comments!',
-    'May your terminal glow like diyas and your coffee never run out!',
-    'May each commit be meaningful and each release a celebration!',
-    'May your forks find new homes and your code bring people together!',
-    'May your contributions be recognized and your growth be steady!',
-    'May you discover new tools and mentors to guide your path!',
-    'May your README be clear and your docs shine bright!',
-    'May your test coverage rise like the festival lights!',
-    'May your pair programming sessions be full of joy and learning!',
-    'May your ideas branch out and merge into incredible features!',
-    'May your keyboard sing and your deploys be smooth!',
-    'May your algorithms be fast and your evenings peaceful!',
-    'May your Git history be clean and your memories richer this season!',
-    'May new opportunities find you and your code open doors!',
-    'May your stars count increase and your heart be content!',
-    'May every bug teach you wisdom and every feature bring pride!',
-    'May your collaboration be warm and your repos evergreen!',
-    'May you build things that brighten someone’s day this Diwali!',
-    'May your local branch always match the remote and your tea be warm!',
-    'May your explorer be curious and your projects flourish!',
-    'May your contributions spark joy and ignite new friendships!',
-    'May fortune and uptime favor your services tonight!'
+    `🪔 ${name || login}, even a single diya starts the light. Keep coding! Shubh Diwali ✨`,
+    `💫 ${name || login}, your ${repoCount} repos glow like diyas. May your pull requests merge smoothly this Diwali! 🔥`,
+    `🔥 ${name || login}, your ${totalStars} stars shine like fireworks! May your code light up the world this Diwali 🪔✨`,
+    `🌟 ${name || login}, may your commits be bright and your issues be few — celebrate every small win!`,
+    `🎉 ${name || login}, whether you pushed today or last week, may inspiration find you and ideas flow freely!`,
+    `🧩 ${name || login}, may your toughest bugs unravel like string lights and reveal beautiful solutions.`,
+    `🍵 ${name || login}, take a break between commits — tea, snacks, and a smooth deploy await you!`,
+    `🚀 ${name || login}, may your next release feel like fireworks — fast, joyful, and shared with friends.`,
+    `🤝 ${name || login}, may collaboration warm your repo like diyas and bring bright new contributions.`,
+    `✨ ${name || login}, code with heart: may your work bring light to someone’s project this season.`
   ]
 
-  // compute a base index influenced by activity but include randomness
-  const noise = Math.random() * 0.3 - 0.15 // small jitter
-  const score = Math.max(0, Math.min(1, total + noise))
-  const idx = Math.floor(score * (templates.length - 1))
-  const base = templates[idx] || templates[0]
-
-  // personalized suffixes
-  const suffixes = [
-    `You have ${user.public_repos} public repos and ${user.followers} followers — keep shining!`,
-    `Your recent ${events.length} public events tell a story of curiosity — celebrate it!`,
-    `Keep exploring — your contributions matter to many.`,
-    `May your next PR bring delightful surprises.`,
-    `Here’s to more learnings, merges, and bright ideas.`
-  ]
-
-  const personal = suffixes[Math.floor(Math.random() * suffixes.length)]
-  return `${base} ${personal}`
+  // select template by score ranges to keep deterministic, add small randomness
+  const baseIdx = Math.min(Math.floor(score / 20), templates.length - 1)
+  const jitter = Math.random() < 0.25 ? 1 : 0 // slight chance to pick next one
+  const idx = Math.min(templates.length - 1, baseIdx + jitter)
+  return templates[idx]
 }
 
 export default function App() {
@@ -90,9 +70,19 @@ export default function App() {
                 <p className="subtitle">✨ Generate your diwali blessing card ✨</p>
 
                 <GithubForm
-                  onResult={(data) => {
-                    const blessing = generateBlessing(data.user, data.events)
-                    setResult({ ...data, blessing })
+                  onResult={(data: any) => {
+                    // data: { user, events, totalStars, lastCommit }
+                    const user = data.user || {}
+                    const blessing = generateBlessingFromActivity({
+                      public_repos: user.public_repos || 0,
+                      followers: user.followers || 0,
+                      totalStars: data.totalStars || 0,
+                      lastCommit: data.lastCommit || null,
+                      name: user.name,
+                      login: user.login,
+                      events: data.events || []
+                    })
+                    setResult({ user, events: data.events || [], blessing })
                     setError(null)
                   }}
                   onError={(msg) => { setError(msg); setResult(null) }}

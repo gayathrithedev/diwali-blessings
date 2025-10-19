@@ -21,8 +21,28 @@ export default function GithubForm({ onResult, onError }: Props) {
       // fetch events (may be empty or rate limited)
       const eventsRes = await fetch(`https://api.github.com/users/${username}/events/public`)
       const events = eventsRes.ok ? await eventsRes.json() : []
+      // fetch repos to compute total stars and last pushed date
+      let totalStars = 0
+      let lastCommit: string | null = null
+      try {
+        // try to fetch up to 100 repos (enough for most users)
+        const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=pushed`)
+        if (reposRes.ok) {
+          const repos = await reposRes.json()
+          for (const r of repos) {
+            totalStars += r.stargazers_count || 0
+            // pushed_at may be null for empty repos
+            if (r.pushed_at) {
+              if (!lastCommit || new Date(r.pushed_at) > new Date(lastCommit)) lastCommit = r.pushed_at
+            }
+          }
+        }
+      } catch (err) {
+        // ignore repo fetch failures (rate limits) and continue
+        // console.warn('repo fetch failed', err)
+      }
 
-      const payload = { user, events }
+      const payload = { user, events, totalStars, lastCommit }
       onResult(payload)
     } catch (err: any) {
       onError?.(err.message || String(err))
