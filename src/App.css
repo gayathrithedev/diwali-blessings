@@ -31,29 +31,7 @@ body{background:var(--bg); color: #fff; font-family: Inter, system-ui, Arial}
 .flip-card .back{transform:rotateY(180deg)}
 .card-inner{width:90%; max-width:640px; background:linear-gradient(135deg, rgba(20,10,30,0.6), rgba(30,15,40,0.6)); border-radius:16px; padding:28px; box-shadow:0 10px 40px rgba(0,0,0,0.6)}
 
-
-@media (max-width: 768px){
-  #root{
-    padding:16px;
-  }
-  .main-container{
-    padding: 16px;
-  }
-  .flip-card{width:92%; height:auto}
-  .flip-card .flipper{width: 92%; height: 428px}
-  .card-inner{width: 100%; padding: 0px;}
-  .share-row{
-    flex-direction:column;
-    align-items:stretch;
-  }
-  .blessing-card .avatar{
-    width:60px;
-    height:60px;
-    border-radius: 30px;
-  }
-}
-
-.blessing-card{display:flex; gap:16px; background:linear-gradient(135deg, rgba(255,140,50,0.08), rgba(255,220,120,0.02)); padding:18px; border-radius:14px; align-items:center}
+.blessing-card{display:flex; background:linear-gradient(135deg, rgba(255,140,50,0.08), rgba(255,220,120,0.02)); padding:18px; border-radius:14px; align-items:center}
 .blessing-card .avatar{width:96px; height:96px; border-radius:50%; border:3px solid rgba(255,255,255,0.06)}
 .blessing-card h2{margin:0 0 8px 0}
 .blessing-card .blessing{font-size:1.05rem; margin-bottom:8px}
@@ -103,4 +81,30 @@ body{background:var(--bg); color: #fff; font-family: Inter, system-ui, Arial}
 
 .read-the-docs {
   color: #888;
+}
+
+@media (max-width: 768px){
+  #root{
+    padding: 0px;
+    margin: 0;
+  }
+  .main-container{
+    padding: 16px;
+    width: 100%;
+  }
+  .flip-card{width:100%; height:auto}
+  .flip-card .flipper{width: 92%; height: 428px}
+  .card-inner{width: 100%; padding: 0px;}
+  .share-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .blessing-card{
+    margin: 0 0 0 0;
+  }
+  .blessing-card .avatar{
+    width:60px;
+    height:60px;
+    border-radius: 30px;
+  }
 }
