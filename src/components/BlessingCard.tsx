@@ -52,7 +52,7 @@ export default function BlessingCard({ data, onBack }: Props) {
 
   function buildShareMessage(): string {
     const site = 'https://gayathrithedev.github.io/diwali-blessings/'
-    return `I have tried Diwali Blessing Generator, it is super fun!\nTry it here: ${site}\n\nMy blessing:\n${blessing}`
+    return `I have tried Diwali Blessing Generator, it is super fun!\nTry it here: ${site}}`
   }
 
   async function shareImageWithFallback(platform: 'twitter' | 'linkedin' | 'generic') {
