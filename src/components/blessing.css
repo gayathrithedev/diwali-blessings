@@ -1,8 +1,107 @@
-.blessing-card{backdrop-filter: blur(6px); box-shadow: 0 6px 30px rgba(0,0,0,0.6)}
-.blessing{color:#fff}
+.blessing-card {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, rgba(255,140,50,0.08), rgba(255,220,120,0.02));
+  border-radius: 16px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.5);
+  color: #fff;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
 
-.back-btn{background:transparent; border:1px solid rgba(255,255,255,0.08); color:#fff; padding:8px 12px; border-radius:8px; cursor:pointer}
-.back-btn:hover{background:rgba(255,255,255,0.02)}
+.card-header {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffb86b;
+  margin-bottom: 16px;
+}
+
+.card-body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-section img.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.1);
+}
+
+.blessing-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-name {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #ffdca8;
+}
+
+.blessing-message {
+  margin: 4px 0 0;
+  font-size: 1.05rem;
+  color: #fff;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.social-icons a {
+  color: #ffb86b;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+}
+
+.back-btn {
+  background: linear-gradient(90deg, #ffb86b, #ff6b6b);
+  border: none;
+  color: #111;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.back-btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    flex-direction: column;
+    text-align: center;
+  }
+  .blessing-content {
+    align-items: center;
+  }
+  .card-footer {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
 
 .share-row{display:flex;gap:10px;align-items:center;margin-top:12px}
 .share-btn{background:linear-gradient(90deg,#ffb86b,#ff6b6b);border:none;color:#111;padding:8px 12px;border-radius:8px;cursor:pointer}

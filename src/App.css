@@ -41,15 +41,10 @@ body{background:var(--bg); color: #fff; font-family: Inter, system-ui, Arial}
   }
   .flip-card{width:92%; height:auto}
   .flip-card .flipper{width: 92%; height: 428px}
-  .card-inner{width: 100%;}
+  .card-inner{width: 100%; padding: 0px;}
   .share-row{
     flex-direction:column;
     align-items:stretch;
-  }
-  .blessing-card{
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
   }
   .blessing-card .avatar{
     width:60px;
